@@ -1,6 +1,8 @@
 # stackmap.nvim
 learning neovim plugin development
 
+[last left off](https://youtu.be/n4Lp4cV8YR0?si=-lu4cY-w58kV266K&t=4612)
+
 ## notes
 * Files in `lua/` are to be run when they are called
 * Files in `plugin/` are to be run on startup/runtime
