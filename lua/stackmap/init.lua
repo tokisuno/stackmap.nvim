@@ -18,35 +18,43 @@ M.push = function (name, mode, mappings)
   for lhs, rhs in pairs(mappings) do
     local existing = find_mapping(maps, lhs)
     if existing then
-      table.insert(existing_maps, existing)
+      existing_maps[lhs] = existing
     end
   end
 
-  M._stack[name] = existing_maps
-
   for lhs, rhs in pairs(mappings) do
-    -- TODO: need some way to pass opts here
     vim.keymap.set(mode, lhs, rhs)
+  end
+
+  M._stack[name] = M._stack[name] or {}
+
+  M._stack[name][mode] = {
+    existing = existing_maps,
+    mappings = mappings,
+  }
+end
+
+M.pop = function(name, mode)
+  local state = M._stack[name][mode]
+  M._stack[name][mode] = nil
+
+  for lhs, rhs in pairs(state.mappings) do
+    if state.existing[lhs] then
+      -- handle mappings that existed
+    else
+      vim.keymap.del(mode, lhs)
+    end
   end
 end
 
-M.pop = function (name)
+-- M.push("debug_mode", "n", {
+--   [leader.."ph"] = "echo 'hello'",
+--   [leader.."pz"] = "echo 'goodbye'",
+-- })
+
+
+M._clear = function()
+  M._stack = {}
 end
-
-M.push("debug_mode", "n", {
-  [leader.."ph"] = "echo 'hello'",
-  [leader.."pz"] = "echo 'goodbye'",
-})
-
---[[
-
-lua require('mapstack').push('debug_mode', 'n' {
-})
-
-...
-
-lua require('mapstack').pop('debug_mode')
-
---]]
 
 return M

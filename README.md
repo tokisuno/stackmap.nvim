@@ -1,7 +1,9 @@
 # stackmap.nvim
 learning neovim plugin development
 
-[last left off](https://youtu.be/n4Lp4cV8YR0?si=-lu4cY-w58kV266K&t=4612)
+[last left off](https://youtu.be/n4Lp4cV8YR0?si=msuEhNsuB-Tbx0r0&t=5538)
+
+**I messed something up and I don't know what. Reminder to go to TJ's discord server to ask for advice.**
 
 ## notes
 * Files in `lua/` are to be run when they are called
@@ -12,7 +14,19 @@ learning neovim plugin development
 * `require()` loads a file once and saves the result of that thing
 * lhs = left-hand side
 
+## Mindmap
+```lua
+--[[
 
+lua require('mapstack').push('debug_mode', 'n' {
+})
+
+...
+
+lua require('mapstack').pop('debug_mode')
+
+--]]
+```
 ## Functions needed for plugin
 * vim.keymap.set(...)           -> create new keymaps
 * vim.api.nvim_get_keymap(...)  -> gets keymaps
@@ -25,4 +39,5 @@ learning neovim plugin development
 ### ipairs
 * iterate over numeric keys
 * order IS guaranteed
+
 
