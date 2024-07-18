@@ -50,7 +50,7 @@ describe("stackmap", function()
     local found = find_map("asdf")
     assert.are.same(rhs, found.rhs)
 
-    require("stackmap").pop("test1")
+    require("stackmap").pop("test1", "n")
     local after_pop = find_map("asdf")
     assert.are.same(nil, after_pop)
   end)

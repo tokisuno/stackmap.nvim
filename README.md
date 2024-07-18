@@ -3,8 +3,6 @@ learning neovim plugin development
 
 [last left off](https://youtu.be/n4Lp4cV8YR0?si=msuEhNsuB-Tbx0r0&t=5538)
 
-**I messed something up and I don't know what. Reminder to go to TJ's discord server to ask for advice.**
-
 ## notes
 * Files in `lua/` are to be run when they are called
 * Files in `plugin/` are to be run on startup/runtime
