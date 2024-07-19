@@ -1,5 +1,5 @@
 local M = {}
-local leader = vim.g.mapleader -- <- so then i can search for <Space> which is my leaderkey
+-- local leader = vim.g.mapleader -- <- so then i can search for <Space> which is my leaderkey
 
 local find_mapping = function (maps, lhs)
   for _, value in ipairs(maps) do
@@ -40,18 +40,17 @@ M.pop = function(name, mode)
 
   for lhs, rhs in pairs(state.mappings) do
     if state.existing[lhs] then
-      -- handle mappings that existed
+      -- Handle mapping that existed
+      local og_mapping = state.existing[lhs]
+
+      -- TODO: Handle options from the table
+      vim.keymap.set(mode, lhs, og_mapping.rhs)
     else
+      -- Handle mappings that don't exist
       vim.keymap.del(mode, lhs)
     end
   end
 end
-
--- M.push("debug_mode", "n", {
---   [leader.."ph"] = "echo 'hello'",
---   [leader.."pz"] = "echo 'goodbye'",
--- })
-
 
 M._clear = function()
   M._stack = {}

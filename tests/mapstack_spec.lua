@@ -43,7 +43,7 @@ describe("stackmap", function()
     assert.are.same(rhs .. "2", found_2.rhs)
   end)
 
-  it('can delete mappings after pop', function()
+  it('can delete mappings after pop: no existing', function()
     local rhs = "echo 'this is a test'"
     require("stackmap").push("test1", "n", { asdf = rhs, })
 
@@ -54,4 +54,19 @@ describe("stackmap", function()
     local after_pop = find_map("asdf")
     assert.are.same(nil, after_pop)
   end)
+
+  it('can delete mappings after pop: yes existing', function()
+    vim.keymap.set('n', 'asdf', "echo 'OG MAPPING'")
+
+    local rhs = "echo 'this is a test'"
+    require("stackmap").push("test1", "n", { asdf = rhs, })
+
+    local found = find_map("asdf")
+    assert.are.same(rhs, found.rhs)
+
+    require("stackmap").pop("test1", "n")
+    local after_pop = find_map("asdf")
+    assert.are.same("echo 'OG MAPPING'", after_pop.rhs)
+  end)
+
 end)
